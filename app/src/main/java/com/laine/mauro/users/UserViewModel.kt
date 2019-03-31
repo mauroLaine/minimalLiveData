@@ -1,5 +1,6 @@
 package com.laine.mauro.users
 
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 
 class UserViewModel : ViewModel() {
@@ -12,9 +13,17 @@ class UserViewModel : ViewModel() {
         User("Federico Mena", "Mexico City", "Novell")
     )
 
+    val test: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
+
     fun getNextUser(): User {
         position++
         return users[getNextPosition()]
+    }
+
+    fun setNewValue(newTest: String) {
+        test.value = newTest
     }
 
     private fun getNextPosition(): Int {
