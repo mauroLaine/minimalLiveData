@@ -20,5 +20,14 @@ class MainActivity : AppCompatActivity() {
 //        setContentView(R.layout.activity_main)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.user = user
+
+        binding.nextButton.setOnClickListener {
+            position++
+            binding.user = users[getNextPosition()]
+        }
+    }
+
+    private fun getNextPosition(): Int{
+        return position.rem(users.size)
     }
 }
