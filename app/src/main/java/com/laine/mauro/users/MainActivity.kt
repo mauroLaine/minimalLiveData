@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.laine.mauro.users.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -14,20 +13,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         val model = ViewModelProviders.of(this).get(UserViewModel::class.java)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.user = model.getNextUser()
-
-        val nameObserver = Observer<String> { test ->
-            Toast.makeText(this, test, Toast.LENGTH_SHORT).show()
-        }
-        model.test.observe(this, nameObserver)
+        model.user.observe(this, Observer<User> { user ->
+            binding.user = user
+        })
+        model.getNextUser()
 
         binding.nextButton.setOnClickListener {
-            val user = model.getNextUser()
-            binding.user = user
-            model.setNewValue(user.name)
+            model.getNextUser()
         }
     }
 }

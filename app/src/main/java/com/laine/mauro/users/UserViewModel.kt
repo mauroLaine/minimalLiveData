@@ -13,17 +13,13 @@ class UserViewModel : ViewModel() {
         User("Federico Mena", "Mexico City", "Novell")
     )
 
-    val test: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
+    val user: MutableLiveData<User> by lazy {
+        MutableLiveData<User>()
     }
 
-    fun getNextUser(): User {
+    fun getNextUser() {
+        user.value = users[getNextPosition()]
         position++
-        return users[getNextPosition()]
-    }
-
-    fun setNewValue(newTest: String) {
-        test.value = newTest
     }
 
     private fun getNextPosition(): Int {
